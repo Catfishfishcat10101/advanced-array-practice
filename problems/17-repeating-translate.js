@@ -29,13 +29,48 @@ console.log(repeatingTranslate("her family flew to France"));   // "herer family
 */
 
 let repeatingTranslate = function(sentence) {
-    // Your code here
-};
+  let words = sentence.split(' ');
 
+  words.forEach((word, index) => {
+    words[index] = translateWord(word);
+  });
+
+  return words.join(' ');
+}
 
 let translateWord = function(word) {
-    // Your code here
-};
+  if (word.length < 3) {
+    return word;
+  }
+
+  let vowels = ['a', 'e', 'i', 'o', 'u'];
+  let lastVowelIndex = -1;
+
+  for (let i = word.length - 1; i >= 0; i--) {
+    if (vowels.includes(word[i].toLowerCase())) {
+      lastVowelIndex = i;
+      break;
+    }
+  }
+
+  if (lastVowelIndex === -1) {
+    return word;
+  }
+
+  let lastVowel = word[lastVowelIndex];
+  let suffix = word.slice(lastVowelIndex);
+
+  if (vowels.includes(lastVowel.toLowerCase())) {
+    return word + word;
+  } else {
+    return word + suffix;
+  }
+}
+
+console.log(repeatingTranslate("we like to go running fast"));  // "we likelike to go runninging fastast"
+console.log(repeatingTranslate("he cannot find the trash"));    // "he cannotot findind thethe trashash"
+console.log(repeatingTranslate("pasta is my favorite dish"));   // "pastapasta is my favoritefavorite dishish"
+console.log(repeatingTranslate("her family flew to France"));   // "herer familyily flewew to FranceFrance"
 
 /**************DO NOT MODIFY ANYTHING UNDER THIS  LINE*****************/
 
@@ -43,4 +78,4 @@ try {
     module.exports = repeatingTranslate;
 } catch (e) {
     module.exports = null;
-}
+}
